@@ -1,8 +1,8 @@
 {
-  "name": "NutriApp Premium",
-  "short_name": "NutriPro",
-  "description": "Versión iOS de NutriSystems",
-  "start_url": "/nutri-premium/",
+  "name": "NutriPro Rosa",
+  "short_name": "RosaApp",
+  "description": "Plan Nutricional Premium para Rosa",
+  "start_url": "/nutri-rosa/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#000000",
