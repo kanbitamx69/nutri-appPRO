@@ -2,14 +2,15 @@
   "name": "NutriPro Rosa",
   "short_name": "RosaApp",
   "description": "Plan Nutricional Premium para Rosa",
-  "start_url": "/nutri-rosa/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#000000",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "https://i.imgur.com/pdhxXxf.png",
+      "src": "icono.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
