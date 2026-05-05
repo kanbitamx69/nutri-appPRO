@@ -11,14 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* Paleta Midnight Rose */
-            --ios-bg: #000; 
-            --ios-card: #1C1C1E; 
-            --ios-accent: #FF2D55; /* Rosa vibrante iOS */
-            --ios-accent-soft: rgba(255, 45, 85, 0.15);
-            --ios-text: #FFF; 
-            --ios-sec: #8E8E93;
-            --ios-gold: #FFD60A;
+            --ios-bg: #000; --ios-card: #1C1C1E; --ios-blue: #FF2D55; /* Cambiado a Rosa */
+            --ios-green: #30D158; --ios-text: #FFF; --ios-sec: #8E8E93;
         }
         body {
             background: var(--ios-bg); color: var(--ios-text);
@@ -26,59 +20,43 @@
             padding-bottom: 50px; -webkit-user-select: none;
         }
         .header { padding: 40px 20px 20px; border-bottom: 1px solid #222; }
-        .header h1 { font-size: 32px; margin: 0; font-weight: 700; color: #fff; }
-        .header p { color: var(--ios-accent); margin: 0; font-weight: 600; font-size: 13px; letter-spacing: 1px; }
-
+        .header h1 { font-size: 32px; margin: 0; font-weight: 700; }
         .streak-box {
             background: var(--ios-card); margin: 20px; padding: 20px;
             border-radius: 20px; display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid #2c2c2e;
         }
-        .streak-val { font-size: 42px; font-weight: 800; color: var(--ios-gold); }
-
+        .streak-val { font-size: 42px; font-weight: 800; color: #FF9F0A; }
         .meal-tabs { display: flex; background: #1C1C1E; margin: 0 20px 20px; padding: 2px; border-radius: 10px; }
-        .tab-btn { flex: 1; border: none; background: none; color: #fff; padding: 10px; font-weight: 600; border-radius: 8px; font-size: 13px; }
-        .tab-btn.active { background: var(--ios-accent); color: white; }
-
-        .section-label { padding: 0 20px; color: var(--ios-sec); font-size: 11px; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
-        
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px; margin-bottom: 25px; }
-        .menu-card { 
-            background: var(--ios-card); border-radius: 16px; padding: 15px; font-weight: 600; 
-            border: 2px solid transparent; transition: 0.2s; font-size: 13px;
-        }
-        .menu-card.active { border-color: var(--ios-accent); background: var(--ios-accent-soft); }
-
-        .ios-list { background: var(--ios-card); margin: 0 20px 20px; border-radius: 14px; overflow: hidden; border: 1px solid #2c2c2e; }
-        .ios-row { padding: 12px 16px; display: flex; justify-content: space-between; border-bottom: 1px solid #2c2c2e; align-items: center; }
-        .ios-row span { font-size: 15px; }
-        
-        select { background: none; border: none; color: var(--ios-accent); font-size: 16px; width: 60%; text-align: right; outline: none; }
-
-        .summary { background: #FFF; color: #000; margin: 20px; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(255, 45, 85, 0.2); }
+        .tab-btn { flex: 1; border: none; background: none; color: #fff; padding: 10px; font-weight: 600; border-radius: 8px; }
+        .tab-btn.active { background: #636366; }
+        .section-label { padding: 0 20px; color: var(--ios-sec); font-size: 13px; text-transform: uppercase; margin-bottom: 8px; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px; margin-bottom: 25px; }
+        .menu-card { background: var(--ios-card); border-radius: 16px; padding: 15px; font-weight: 600; border: 2px solid transparent; transition: 0.2s; }
+        .menu-card.active { border-color: var(--ios-blue); background: rgba(255, 45, 85, 0.1); }
+        .ios-list { background: var(--ios-card); margin: 0 20px 20px; border-radius: 14px; overflow: hidden; }
+        .ios-row { padding: 12px 16px; display: flex; justify-content: space-between; border-bottom: 1px solid #333; }
+        select { background: none; border: none; color: var(--ios-blue); font-size: 16px; width: 60%; text-align: right; outline: none; }
+        .summary { background: #FFF; color: #000; margin: 20px; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .sum-item { margin-bottom: 15px; border-bottom: 1px solid #EEE; padding-bottom: 10px; }
         .sum-item:last-child { border: none; }
-        .sum-item b { font-size: 11px; color: var(--ios-accent); text-transform: uppercase; }
+        .sum-item b { font-size: 11px; color: var(--ios-blue); text-transform: uppercase; }
         .sum-item p { margin: 5px 0; font-weight: 700; font-size: 14px; }
-        
-        .qty { color: #666; font-size: 12px; font-weight: 400; }
-        
+        .qty { color: #555; font-size: 12px; font-weight: 400; }
         .btn-main { width: 100%; padding: 18px; border-radius: 14px; border: none; font-size: 17px; font-weight: 700; cursor: pointer; }
-        .btn-primary { background: var(--ios-accent); color: #fff; box-shadow: 0 4px 15px rgba(255, 45, 85, 0.3); }
-        
+        .btn-primary { background: var(--ios-blue); color: #fff; }
         .hidden { display: none; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <p>RETO 1800 KCAL</p>
+        <p style="color:var(--ios-sec); margin:0;">NUTRISYSTEMS PREMIUM</p>
         <h1>Rosa</h1>
     </div>
 
     <div class="streak-box">
-        <div><p style="margin:0; font-size:12px; font-weight:600; color:var(--ios-sec);">RACHA DE ÉXITO</p><span id="racha" class="streak-val">0</span></div>
-        <i class="fas fa-heart" style="color:var(--ios-accent); font-size:35px;"></i>
+        <div><p style="margin:0; font-size:12px; font-weight:600;">RACHA ACTUAL</p><span id="racha" class="streak-val">0</span></div>
+        <i class="fas fa-fire" style="color:#FF9F0A; font-size:35px;"></i>
     </div>
 
     <div class="meal-tabs">
@@ -87,7 +65,7 @@
         <button class="tab-btn" onclick="changeMeal('Cena', this)">Cena</button>
     </div>
 
-    <p class="section-label">Platillos Sugeridos</p>
+    <p class="section-label">Platillos iOS Premium</p>
     <div id="menuGrid" class="menu-grid"></div>
 
     <p class="section-label">Detalle de Raciones</p>
@@ -99,41 +77,33 @@
     </div>
 
 <script>
-    // Base de datos ajustada con porciones SMAE
     const FOOD_DB = {
-        "Verduras": [{n:"Espinaca",q:"2 tzas"},{n:"Tomate",q:"1 pza"},{n:"Pepino",q:"1 tza"},{n:"Nopal",q:"2 pzas"}],
-        "Frutas": [{n:"Fresas",q:"17 pzas"},{n:"Manzana",q:"1 pza"},{n:"Plátano",q:"1/2 pza"},{n:"Papaya",q:"1 tza"}],
-        "Cereales sin Grasa": [{n:"Tortilla maíz",q:"1 pza"},{n:"Arroz cocido",q:"1/4 tza"},{n:"Avena",q:"1/3 tza"},{n:"Pan integral",q:"1 reb"}],
+        "Verduras": [{n:"Espinaca",q:"2 tzas"},{n:"Tomate rojo",q:"1 pza"},{n:"Pepino",q:"1 tza"},{n:"Brócoli",q:"1/2 tza"},{n:"Calabacita",q:"1/2 tza"},{n:"Nopal",q:"2 pzas"}],
+        "Frutas": [{n:"Manzana",q:"1 pza"},{n:"Plátano",q:"1/2 pza"},{n:"Fresas",q:"17 pzas"},{n:"Papaya",q:"1 tza"},{n:"Mango",q:"1/2 pza"}],
+        "Cereales sin grasa": [{n:"Tortilla maíz",q:"1 pza"},{n:"Arroz cocido",q:"1/4 tza"},{n:"Avena",q:"1/3 tza"},{n:"Pan integral",q:"1 reb"},{n:"Salmas",q:"1 paq"}],
         "Leguminosas": [{n:"Frijoles",q:"1/2 tza"},{n:"Lentejas",q:"1/2 tza"}],
-        "AOA Muy Bajo Grasa": [{n:"Pechuga pollo",q:"30g"},{n:"Atún agua",q:"31g"}],
+        "AOA Bajo Grasa": [{n:"Pechuga pollo",q:"30g"},{n:"Atún agua",q:"31g"},{n:"Bistec Res",q:"25g"}],
         "AOA Moderado Grasa": [{n:"Huevo entero",q:"1 pza"},{n:"Queso Oaxaca",q:"30g"}],
-        "AOA Alto Grasa": [{n:"Queso Hebra",q:"30g"},{n:"Huevo revuelto",q:"1 pza"}],
+        "AOA Muy Alto Grasa": [{n:"Queso Hebra",q:"30g"},{n:"Salami",q:"30g"}],
         "Leche Descremada": [{n:"Leche desc",q:"1 tza"},{n:"Yogurt Griego",q:"125g"}],
         "Aceites sin Proteína": [{n:"Aguacate",q:"1/3 pza"},{n:"Aceite Oliva",q:"1 cdita"}]
     };
 
-    // PLAN DE ROSA 1800 KCAL (Según imagen)
+    // CANTIDADES ACTUALIZADAS PARA ROSA (1800 kcal)
     const PLAN = {
-        Desayuno: { "Verduras":1, "Frutas":2, "Cereales sin Grasa":2, "Leguminosas":1, "AOA Muy Bajo Grasa":1, "Leche Descremada":1, "Aceites sin Proteína":1 },
-        Comida: { "Verduras":2, "Frutas":2, "Cereales sin Grasa":2, "AOA Moderado Grasa":2, "Aceites sin Proteína":2 },
-        Cena: { "Verduras":2, "Frutas":1, "Cereales sin Grasa":2, "AOA Alto Grasa":1.5, "Aceites sin Proteína":1 }
+        Desayuno: { "Verduras":1, "Frutas":2, "Cereales sin grasa":2, "Leguminosas":1, "AOA Bajo Grasa":1, "Leche Descremada":1, "Aceites sin Proteína":1 },
+        Comida: { "Verduras":2, "Frutas":2, "Cereales sin grasa":2, "AOA Moderado Grasa":2, "Aceites sin Proteína":2 },
+        Cena: { "Verduras":2, "Frutas":1, "Cereales sin grasa":2, "AOA Muy Alto Grasa":1.5, "Aceites sin Proteína":1 }
     };
 
     const PRESETS = {
-        Desayuno: [
-            { t: "Avena con Fresas", f: { "Cereales sin Grasa":"Avena", "Leche Descremada":"Leche desc", "Frutas":"Fresas" }},
-            { t: "Huevo con Nopal", f: { "AOA Muy Bajo Grasa":"Atún agua", "Verduras":"Nopal", "Cereales sin Grasa":"Tortilla maíz" }}
-        ],
-        Comida: [
-            { t: "Pollo con Arroz", f: { "AOA Moderado Grasa":"Queso Oaxaca", "Cereales sin Grasa":"Arroz cocido", "Verduras":"Tomate" }}
-        ],
-        Cena: [
-            { t: "Quesadilla Hebra", f: { "Cereales sin Grasa":"Tortilla maíz", "AOA Alto Grasa":"Queso Hebra", "Verduras":"Espinaca" }}
-        ]
+        Desayuno: [{ t: "Avena & Fruta", f: { "Cereales sin grasa":"Avena", "Leche Descremada":"Leche desc", "Frutas":"Fresas" }}, { t: "Huevo con Nopal", f: { "AOA Moderado Grasa":"Huevo entero", "Verduras":"Nopal" }}],
+        Comida: [{ t: "Pollo & Arroz", f: { "AOA Bajo Grasa":"Pechuga pollo", "Cereales sin grasa":"Arroz cocido" }}],
+        Cena: [{ t: "Quesadilla Rosa", f: { "Cereales sin grasa":"Tortilla maíz", "AOA Muy Alto Grasa":"Queso Hebra" }}]
     };
 
     let currentMeal = 'Desayuno', selections = {}, selectedT = "";
-    let racha = parseInt(localStorage.getItem('rosa_racha')) || 0;
+    let racha = parseInt(localStorage.getItem('rosa_r_pro')) || 0;
 
     function render() {
         document.getElementById('racha').innerText = racha;
@@ -164,7 +134,7 @@
         keys.forEach(k => {
             const data = FOOD_DB[k].find(f => f.n === selections[k]);
             const rac = PLAN[currentMeal][k];
-            h += `<div class="sum-item"><b>${k}</b><p>${selections[k]} <span class="qty">➔ ${rac} x (${data.q})</span></p></div>`;
+            h += `<div class="sum-item"><b>${k}</b><p>${selections[k]} <span class="qty">➔ ${rac} porción (${data.q} c/u)</span></p></div>`;
         });
         body.innerHTML = h;
     }
@@ -178,7 +148,7 @@
 
     function confirmDay() { 
         racha++; 
-        localStorage.setItem('rosa_racha', racha); 
+        localStorage.setItem('rosa_r_pro', racha); 
         alert("¡Éxito Rosa registrado!");
         location.reload(); 
     }
