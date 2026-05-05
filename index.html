@@ -7,58 +7,112 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --ios-bg: #000; --ios-card: #1C1C1E; --ios-blue: #0A84FF; --ios-text: #FFF; --ios-sec: #8E8E93; }
-        body { background: var(--ios-bg); color: var(--ios-text); font-family: -apple-system, system-ui, sans-serif; margin: 0; padding-bottom: 50px; -webkit-user-select: none; }
+        :root {
+            /* Paleta Midnight Rose */
+            --ios-bg: #000; 
+            --ios-card: #1C1C1E; 
+            --ios-accent: #FF2D55; /* Rosa vibrante iOS */
+            --ios-accent-soft: rgba(255, 45, 85, 0.15);
+            --ios-text: #FFF; 
+            --ios-sec: #8E8E93;
+            --ios-gold: #FFD60A;
+        }
+        body {
+            background: var(--ios-bg); color: var(--ios-text);
+            font-family: -apple-system, system-ui, sans-serif; margin: 0;
+            padding-bottom: 50px; -webkit-user-select: none;
+        }
         .header { padding: 40px 20px 20px; border-bottom: 1px solid #222; }
-        .header h1 { font-size: 32px; margin: 0; font-weight: 700; }
-        .streak-box { background: var(--ios-card); margin: 20px; padding: 20px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .streak-val { font-size: 42px; font-weight: 800; color: #FF9F0A; }
+        .header h1 { font-size: 32px; margin: 0; font-weight: 700; color: #fff; }
+        .header p { color: var(--ios-accent); margin: 0; font-weight: 600; font-size: 13px; letter-spacing: 1px; }
+
+        .streak-box {
+            background: var(--ios-card); margin: 20px; padding: 20px;
+            border-radius: 20px; display: flex; justify-content: space-between; align-items: center;
+            border: 1px solid #2c2c2e;
+        }
+        .streak-val { font-size: 42px; font-weight: 800; color: var(--ios-gold); }
+
         .meal-tabs { display: flex; background: #1C1C1E; margin: 0 20px 20px; padding: 2px; border-radius: 10px; }
         .tab-btn { flex: 1; border: none; background: none; color: #fff; padding: 10px; font-weight: 600; border-radius: 8px; font-size: 13px; }
-        .tab-btn.active { background: #636366; }
+        .tab-btn.active { background: var(--ios-accent); color: white; }
+
         .section-label { padding: 0 20px; color: var(--ios-sec); font-size: 11px; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+        
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px; margin-bottom: 25px; }
-        .menu-card { background: var(--ios-card); border-radius: 14px; padding: 12px; font-size: 12px; font-weight: 600; border: 2px solid transparent; min-height: 45px; display: flex; align-items: center; transition: 0.2s; }
-        .menu-card.active { border-color: var(--ios-blue); background: rgba(10,132,255,0.1); }
-        .ios-list { background: var(--ios-card); margin: 0 20px 20px; border-radius: 14px; overflow: hidden; }
-        .ios-row { padding: 12px 16px; display: flex; justify-content: space-between; border-bottom: 1px solid #333; align-items: center; }
-        select { background: none; border: none; color: var(--ios-blue); font-size: 15px; width: 60%; text-align: right; outline: none; -webkit-appearance: none; }
-        .summary { background: #FFF; color: #000; margin: 20px; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .sum-item { margin-bottom: 12px; border-bottom: 1px solid #EEE; padding-bottom: 8px; }
-        .sum-item b { font-size: 9px; color: var(--ios-blue); text-transform: uppercase; display: block; }
-        .sum-item p { margin: 0; font-weight: 700; font-size: 14px; }
-        .qty { color: #555; font-size: 11px; font-weight: 400; display: block; }
-        .btn-main { width: 100%; padding: 18px; border-radius: 14px; border: none; font-size: 17px; font-weight: 700; background: var(--ios-blue); color: #fff; margin-top: 10px; cursor: pointer; }
-        .hidden { display: none !important; }
+        .menu-card { 
+            background: var(--ios-card); border-radius: 16px; padding: 15px; font-weight: 600; 
+            border: 2px solid transparent; transition: 0.2s; font-size: 13px;
+        }
+        .menu-card.active { border-color: var(--ios-accent); background: var(--ios-accent-soft); }
+
+        .ios-list { background: var(--ios-card); margin: 0 20px 20px; border-radius: 14px; overflow: hidden; border: 1px solid #2c2c2e; }
+        .ios-row { padding: 12px 16px; display: flex; justify-content: space-between; border-bottom: 1px solid #2c2c2e; align-items: center; }
+        .ios-row span { font-size: 15px; }
+        
+        select { background: none; border: none; color: var(--ios-accent); font-size: 16px; width: 60%; text-align: right; outline: none; }
+
+        .summary { background: #FFF; color: #000; margin: 20px; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(255, 45, 85, 0.2); }
+        .sum-item { margin-bottom: 15px; border-bottom: 1px solid #EEE; padding-bottom: 10px; }
+        .sum-item:last-child { border: none; }
+        .sum-item b { font-size: 11px; color: var(--ios-accent); text-transform: uppercase; }
+        .sum-item p { margin: 5px 0; font-weight: 700; font-size: 14px; }
+        
+        .qty { color: #666; font-size: 12px; font-weight: 400; }
+        
+        .btn-main { width: 100%; padding: 18px; border-radius: 14px; border: none; font-size: 17px; font-weight: 700; cursor: pointer; }
+        .btn-primary { background: var(--ios-accent); color: #fff; box-shadow: 0 4px 15px rgba(255, 45, 85, 0.3); }
+        
+        .hidden { display: none; }
     </style>
 </head>
 <body>
-    <div class="header"><p style="color:var(--ios-sec); margin:0;">NUTRISYSTEMS PREMIUM</p><h1>Rosa</h1></div>
-    <div class="streak-box"><div><p style="margin:0; font-size:12px; font-weight:600; color:var(--ios-sec);">RACHA</p><span id="racha" class="streak-val">0</span></div><i class="fas fa-fire" style="color:#FF9F0A; font-size:35px;"></i></div>
+
+    <div class="header">
+        <p>RETO 1800 KCAL</p>
+        <h1>Rosa</h1>
+    </div>
+
+    <div class="streak-box">
+        <div><p style="margin:0; font-size:12px; font-weight:600; color:var(--ios-sec);">RACHA DE ÉXITO</p><span id="racha" class="streak-val">0</span></div>
+        <i class="fas fa-heart" style="color:var(--ios-accent); font-size:35px;"></i>
+    </div>
+
     <div class="meal-tabs">
         <button class="tab-btn active" onclick="changeMeal('Desayuno', this)">Desayuno</button>
         <button class="tab-btn" onclick="changeMeal('Comida', this)">Comida</button>
         <button class="tab-btn" onclick="changeMeal('Cena', this)">Cena</button>
     </div>
-    <p class="section-label">Platillos Sugeridos (20 opciones)</p><div id="menuGrid" class="menu-grid"></div>
-    <p class="section-label">Detalle de Raciones</p><div id="catList" class="ios-list"></div>
-    <div id="summaryCard" class="summary hidden"><div id="sumBody"></div><button class="btn-main" onclick="confirmDay()">Registrar Éxito</button></div>
+
+    <p class="section-label">Platillos Sugeridos</p>
+    <div id="menuGrid" class="menu-grid"></div>
+
+    <p class="section-label">Detalle de Raciones</p>
+    <div id="catList" class="ios-list"></div>
+
+    <div id="summaryCard" class="summary hidden">
+        <div id="sumBody"></div>
+        <button class="btn-main btn-primary" onclick="confirmDay()">Registrar como Logrado</button>
+    </div>
 
 <script>
+    // Base de datos ajustada con porciones SMAE
     const FOOD_DB = {
-        "Verduras": [{n:"Espinaca",q:"2 tzas"},{n:"Tomate",q:"1 pza"},{n:"Pepino",q:"1 tza"},{n:"Brócoli",q:"1/2 tza"},{n:"Calabacita",q:"1/2 tza"},{n:"Nopal",q:"2 pzas"},{n:"Zanahoria",q:"1/2 tza"}],
-        "Frutas": [{n:"Manzana",q:"1 pza"},{n:"Plátano",q:"1/2 pza"},{n:"Fresas",q:"17 pzas"},{n:"Papaya",q:"1 tza"},{n:"Mango",q:"1/2 pza"},{n:"Naranja",q:"2 pzas"}],
-        "Cereales sin Grasa": [{n:"Tortilla",q:"1 pza"},{n:"Arroz",q:"1/4 tza"},{n:"Avena",q:"1/3 tza"},{n:"Pan integral",q:"1 reb"},{n:"Salmas",q:"1 paq"},{n:"Papa",q:"1/2 pza"}],
+        "Verduras": [{n:"Espinaca",q:"2 tzas"},{n:"Tomate",q:"1 pza"},{n:"Pepino",q:"1 tza"},{n:"Nopal",q:"2 pzas"}],
+        "Frutas": [{n:"Fresas",q:"17 pzas"},{n:"Manzana",q:"1 pza"},{n:"Plátano",q:"1/2 pza"},{n:"Papaya",q:"1 tza"}],
+        "Cereales sin Grasa": [{n:"Tortilla maíz",q:"1 pza"},{n:"Arroz cocido",q:"1/4 tza"},{n:"Avena",q:"1/3 tza"},{n:"Pan integral",q:"1 reb"}],
         "Leguminosas": [{n:"Frijoles",q:"1/2 tza"},{n:"Lentejas",q:"1/2 tza"}],
-        "AOA Muy Bajo Grasa": [{n:"Pollo",q:"30g"},{n:"Atún",q:"31g"},{n:"Claras",q:"2 pzas"}],
-        "AOA Moderado Grasa": [{n:"Huevo",q:"1 pza"},{n:"Queso Oaxaca",q:"30g"},{n:"Res molida",q:"30g"}],
-        "AOA Alto Grasa": [{n:"Queso Hebra",q:"30g"},{n:"Salchicha pavo",q:"1 pza"}],
+        "AOA Muy Bajo Grasa": [{n:"Pechuga pollo",q:"30g"},{n:"Atún agua",q:"31g"}],
+        "AOA Moderado Grasa": [{n:"Huevo entero",q:"1 pza"},{n:"Queso Oaxaca",q:"30g"}],
+        "AOA Alto Grasa": [{n:"Queso Hebra",q:"30g"},{n:"Huevo revuelto",q:"1 pza"}],
         "Leche Descremada": [{n:"Leche desc",q:"1 tza"},{n:"Yogurt Griego",q:"125g"}],
         "Aceites sin Proteína": [{n:"Aguacate",q:"1/3 pza"},{n:"Aceite Oliva",q:"1 cdita"}]
     };
 
+    // PLAN DE ROSA 1800 KCAL (Según imagen)
     const PLAN = {
         Desayuno: { "Verduras":1, "Frutas":2, "Cereales sin Grasa":2, "Leguminosas":1, "AOA Muy Bajo Grasa":1, "Leche Descremada":1, "Aceites sin Proteína":1 },
         Comida: { "Verduras":2, "Frutas":2, "Cereales sin Grasa":2, "AOA Moderado Grasa":2, "Aceites sin Proteína":2 },
@@ -67,111 +121,68 @@
 
     const PRESETS = {
         Desayuno: [
-            {t:"Omelette Espinaca", f:{"AOA Muy Bajo Grasa":"Claras","Verduras":"Espinaca","Cereales sin Grasa":"Tortilla"}},
-            {t:"Avena con Fresas", f:{"Cereales sin Grasa":"Avena","Leche Descremada":"Leche desc","Frutas":"Fresas"}},
-            {t:"Huevo con Nopal", f:{"AOA Muy Bajo Grasa":"Claras","Verduras":"Nopal","Leguminosas":"Frijoles"}},
-            {t:"Papaya con Yogurt", f:{"Frutas":"Papaya","Leche Descremada":"Yogurt Griego","Cereales sin Grasa":"Pan integral"}},
-            {t:"Tostadas de Atún", f:{"AOA Muy Bajo Grasa":"Atún","Cereales sin Grasa":"Salmas","Verduras":"Pepino"}},
-            {t:"Sandwich Ligero", f:{"Cereales sin Grasa":"Pan integral","AOA Muy Bajo Grasa":"Pollo","Verduras":"Tomate"}},
-            {t:"Licuado Plátano", f:{"Leche Descremada":"Leche desc","Frutas":"Plátano","Cereales sin Grasa":"Avena"}},
-            {t:"Molletes Rosa", f:{"Cereales sin Grasa":"Pan integral","Leguminosas":"Frijoles","Verduras":"Tomate"}},
-            {t:"Pollo con Fruta", f:{"AOA Muy Bajo Grasa":"Pollo","Frutas":"Mango","Verduras":"Pepino"}},
-            {t:"Bowl de Avena", f:{"Cereales sin Grasa":"Avena","Frutas":"Manzana","Aceites sin Proteína":"Aguacate"}},
-            {t:"Ensalada Desayuno", f:{"Verduras":"Espinaca","Frutas":"Naranja","AOA Muy Bajo Grasa":"Claras"}},
-            {t:"Taco de Frijol", f:{"Cereales sin Grasa":"Tortilla","Leguminosas":"Frijoles","Verduras":"Nopal"}},
-            {t:"Wrap de Claras", f:{"AOA Muy Bajo Grasa":"Claras","Cereales sin Grasa":"Tortilla","Verduras":"Tomate"}},
-            {t:"Yogurt con Manzana", f:{"Leche Descremada":"Yogurt Griego","Frutas":"Manzana","Cereales sin Grasa":"Avena"}},
-            {t:"Queso con Fruta", f:{"AOA Moderado Grasa":"Queso Oaxaca","Frutas":"Mango","Cereales sin Grasa":"Salmas"}},
-            {t:"Enfrijoladas", f:{"Leguminosas":"Frijoles","Cereales sin Grasa":"Tortilla","Verduras":"Espinaca"}},
-            {t:"Pollo a la Plancha", f:{"AOA Muy Bajo Grasa":"Pollo","Cereales sin Grasa":"Papa","Verduras":"Brócoli"}},
-            {t:"Pan con Aguacate", f:{"Cereales sin Grasa":"Pan integral","Aceites sin Proteína":"Aguacate","Verduras":"Tomate"}},
-            {t:"Smoothie Bowl", f:{"Leche Descremada":"Leche desc","Frutas":"Fresas","Cereales sin Grasa":"Salmas"}},
-            {t:"Mix Premium", f:{"Frutas":"Papaya","AOA Muy Bajo Grasa":"Atún","Verduras":"Pepino"}}
+            { t: "Avena con Fresas", f: { "Cereales sin Grasa":"Avena", "Leche Descremada":"Leche desc", "Frutas":"Fresas" }},
+            { t: "Huevo con Nopal", f: { "AOA Muy Bajo Grasa":"Atún agua", "Verduras":"Nopal", "Cereales sin Grasa":"Tortilla maíz" }}
         ],
         Comida: [
-            {t:"Bistec con Arroz", f:{"AOA Moderado Grasa":"Res molida","Cereales sin Grasa":"Arroz","Verduras":"Calabacita"}},
-            {t:"Tacos de Res", f:{"AOA Moderado Grasa":"Res molida","Cereales sin Grasa":"Tortilla","Verduras":"Nopal"}},
-            {t:"Bowl de Res", f:{"AOA Moderado Grasa":"Res molida","Cereales sin Grasa":"Arroz","Frutas":"Mango"}},
-            {t:"Ensalada Griega", f:{"Verduras":"Pepino","AOA Moderado Grasa":"Queso Oaxaca","Frutas":"Manzana"}},
-            {t:"Papa con Carne", f:{"Cereales sin Grasa":"Papa","AOA Moderado Grasa":"Res molida","Verduras":"Brócoli"}},
-            {t:"Huevo con Arroz", f:{"AOA Moderado Grasa":"Huevo","Cereales sin Grasa":"Arroz","Verduras":"Tomate"}},
-            {t:"Calabacitas con Res", f:{"Verduras":"Calabacita","AOA Moderado Grasa":"Res molida","Cereales sin Grasa":"Tortilla"}},
-            {t:"Res al Brócoli", f:{"AOA Moderado Grasa":"Res molida","Verduras":"Brócoli","Frutas":"Naranja"}},
-            {t:"Sushi Casero", f:{"Cereales sin Grasa":"Arroz","Verduras":"Pepino","Aceites sin Proteína":"Aguacate"}},
-            {t:"Hamburguesa s/Pan", f:{"AOA Moderado Grasa":"Res molida","Verduras":"Tomate","Aceites sin Proteína":"Aguacate"}},
-            {t:"Tostadas de Res", f:{"AOA Moderado Grasa":"Res molida","Cereales sin Grasa":"Salmas","Verduras":"Espinaca"}},
-            {t:"Brochetas Mixtas", f:{"AOA Moderado Grasa":"Res molida","Verduras":"Tomate","Frutas":"Piña"}},
-            {t:"Picadillo Rosa", f:{"AOA Moderado Grasa":"Res molida","Cereales sin Grasa":"Papa","Verduras":"Zanahoria"}},
-            {t:"Huevo Entomatado", f:{"AOA Moderado Grasa":"Huevo","Verduras":"Tomate","Cereales sin Grasa":"Arroz"}},
-            {t:"Bowl de Papa", f:{"Cereales sin Grasa":"Papa","AOA Moderado Grasa":"Queso Oaxaca","Verduras":"Calabacita"}},
-            {t:"Res Teriyaki", f:{"AOA Moderado Grasa":"Res molida","Verduras":"Zanahoria","Frutas":"Naranja"}},
-            {t:"Ensalada Cesar", f:{"Verduras":"Espinaca","AOA Moderado Grasa":"Res molida","Aceites sin Proteína":"Aceite Oliva"}},
-            {t:"Arroz Chaufa", f:{"Cereales sin Grasa":"Arroz","AOA Moderado Grasa":"Huevo","Verduras":"Calabacita"}},
-            {t:"Salpicón de Res", f:{"AOA Moderado Grasa":"Res molida","Verduras":"Tomate","Frutas":"Manzana"}},
-            {t:"Mix Comida iOS", f:{"AOA Moderado Grasa":"Res molida","Cereales sin Grasa":"Salmas","Frutas":"Plátano"}}
+            { t: "Pollo con Arroz", f: { "AOA Moderado Grasa":"Queso Oaxaca", "Cereales sin Grasa":"Arroz cocido", "Verduras":"Tomate" }}
         ],
         Cena: [
-            {t:"Quesadilla Hebra", f:{"AOA Alto Grasa":"Queso Hebra","Cereales sin Grasa":"Tortilla","Verduras":"Nopal"}},
-            {t:"Sincronizada", f:{"AOA Alto Grasa":"Queso Hebra","Cereales sin Grasa":"Tortilla","Verduras":"Tomate"}},
-            {t:"Salchicha Asada", f:{"AOA Alto Grasa":"Salchicha pavo","Verduras":"Calabacita","Cereales sin Grasa":"Salmas"}},
-            {t:"Taco de Salchicha", f:{"AOA Alto Grasa":"Salchicha pavo","Cereales sin Grasa":"Tortilla","Verduras":"Pepino"}},
-            {t:"Ensalada de Queso", f:{"AOA Alto Grasa":"Queso Hebra","Verduras":"Espinaca","Frutas":"Manzana"}},
-            {t:"Papa con Queso", f:{"Cereales sin Grasa":"Papa","AOA Alto Grasa":"Queso Hebra","Verduras":"Tomate"}},
-            {t:"Salchicha con Nopal", f:{"AOA Alto Grasa":"Salchicha pavo","Verduras":"Nopal","Cereales sin Grasa":"Tortilla"}},
-            {t:"Huevo con Queso", f:{"AOA Alto Grasa":"Queso Hebra","Verduras":"Brócoli","Cereales sin Grasa":"Salmas"}},
-            {t:"Pan con Queso", f:{"Cereales sin Grasa":"Pan integral","AOA Alto Grasa":"Queso Hebra","Verduras":"Pepino"}},
-            {t:"Rollitos Salchicha", f:{"AOA Alto Grasa":"Salchicha pavo","Verduras":"Espinaca","Aceites sin Proteína":"Aguacate"}},
-            {t:"Queso Fundido", f:{"AOA Alto Grasa":"Queso Hebra","Verduras":"Tomate","Cereales sin Grasa":"Salmas"}},
-            {t:"Bowl Cena", f:{"Cereales sin Grasa":"Papa","AOA Alto Grasa":"Salchicha pavo","Verduras":"Zanahoria"}},
-            {t:"Tostadas Queso", f:{"Cereales sin Grasa":"Salmas","AOA Alto Grasa":"Queso Hebra","Frutas":"Manzana"}},
-            {t:"Salchichas al Tomate", f:{"AOA Alto Grasa":"Salchicha pavo","Verduras":"Tomate","Cereales sin Grasa":"Tortilla"}},
-            {t:"Sandwich Queso", f:{"Cereales sin Grasa":"Pan integral","AOA Alto Grasa":"Queso Hebra","Verduras":"Calabacita"}},
-            {t:"Quesadilla & Fruta", f:{"Cereales sin Grasa":"Tortilla","AOA Alto Grasa":"Queso Hebra","Frutas":"Fresas"}},
-            {t:"Salchicha BBQ", f:{"AOA Alto Grasa":"Salchicha pavo","Verduras":"Brócoli","Aceites sin Proteína":"Aceite Oliva"}},
-            {t:"Mix Quesos", f:{"AOA Alto Grasa":"Queso Hebra","Verduras":"Pepino","Cereales sin Grasa":"Salmas"}},
-            {t:"Cena Ligera Rosa", f:{"Verduras":"Nopal","AOA Alto Grasa":"Salchicha pavo","Cereales sin Grasa":"Tortilla"}},
-            {t:"Final iOS Cena", f:{"AOA Alto Grasa":"Queso Hebra","Verduras":"Brócoli","Cereales sin Grasa":"Salmas"}}
+            { t: "Quesadilla Hebra", f: { "Cereales sin Grasa":"Tortilla maíz", "AOA Alto Grasa":"Queso Hebra", "Verduras":"Espinaca" }}
         ]
     };
 
-    let currentMeal='Desayuno', selections={}, selectedT="", racha=parseInt(localStorage.getItem('rosa_racha_v2'))||0;
+    let currentMeal = 'Desayuno', selections = {}, selectedT = "";
+    let racha = parseInt(localStorage.getItem('rosa_racha')) || 0;
 
     function render() {
         document.getElementById('racha').innerText = racha;
-        const grid=document.getElementById('menuGrid'); grid.innerHTML='';
+        const grid = document.getElementById('menuGrid'); grid.innerHTML = '';
         PRESETS[currentMeal].forEach(m => {
             grid.innerHTML += `<div class="menu-card ${selectedT===m.t?'active':''}" onclick="applyP('${m.t}')">${m.t}</div>`;
         });
-        const cats=document.getElementById('catList'); cats.innerHTML='';
+        const cats = document.getElementById('catList'); cats.innerHTML = '';
         Object.keys(PLAN[currentMeal]).forEach(c => {
-            cats.innerHTML += `<div class="ios-row"><span>${c}</span><select onchange="selM('${c}', this.value)"><option value="">- Seleccionar -</option>${FOOD_DB[c].map(f => `<option value="${f.n}" ${selections[c]===f.n?'selected':''}>${f.n}</option>`).join('')}</select></div>`;
+            cats.innerHTML += `<div class="ios-row"><span>${c}</span><select onchange="selM('${c}', this.value)"><option value="">-</option>${FOOD_DB[c].map(f => `<option value="${f.n}" ${selections[c]===f.n?'selected':''}>${f.n}</option>`).join('')}</select></div>`;
         });
         updateSum();
     }
 
     function applyP(t) {
-        if(selectedT===t) { selections={}; selectedT=""; }
-        else { selectedT=t; selections={...PRESETS[currentMeal].find(x=>x.t===t).f}; }
+        if(selectedT===t) { selections = {}; selectedT = ""; }
+        else { selectedT = t; selections = {...PRESETS[currentMeal].find(x=>x.t===t).f}; }
         render();
     }
 
-    function selM(c,v) { selectedT=""; if(v) selections[c]=v; else delete selections[c]; updateSum(); }
+    function selM(c, v) { selectedT = ""; if(v) selections[c]=v; else delete selections[c]; updateSum(); }
 
     function updateSum() {
-        const card=document.getElementById('summaryCard'), body=document.getElementById('sumBody');
-        const keys=Object.keys(selections); card.classList.toggle('hidden', keys.length===0);
-        let h=`<div class="sum-item"><b>Platillo</b><p>${selectedT || 'Personalizado'}</p></div>`;
+        const card = document.getElementById('summaryCard'), body = document.getElementById('sumBody');
+        const keys = Object.keys(selections);
+        card.classList.toggle('hidden', keys.length === 0);
+        let h = `<div class="sum-item"><b>Nombre del Platillo</b><p>${selectedT || 'Mix Personalizado'}</p></div>`;
         keys.forEach(k => {
-            const data=FOOD_DB[k].find(f=>f.n===selections[k]), rac=PLAN[currentMeal][k];
-            let val = parseFloat(data.q) * rac;
-            let unit = data.q.replace(/[0-9.]/g, '').trim();
-            h += `<div class="sum-item"><b>${k}</b><p>${selections[k]}</p><span class="qty">➔ ${val}${unit} (${rac} raciones)</span></div>`;
+            const data = FOOD_DB[k].find(f => f.n === selections[k]);
+            const rac = PLAN[currentMeal][k];
+            h += `<div class="sum-item"><b>${k}</b><p>${selections[k]} <span class="qty">➔ ${rac} x (${data.q})</span></p></div>`;
         });
-        body.innerHTML=h;
+        body.innerHTML = h;
     }
 
-    function changeMeal(m,b) { currentMeal=m; document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active')); b.classList.add('active'); selections={}; selectedT=""; render(); }
-    function confirmDay() { racha++; localStorage.setItem('rosa_racha_v2', racha); alert("¡Registro exitoso!"); location.reload(); }
+    function changeMeal(m, b) {
+        currentMeal = m;
+        document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        selections = {}; selectedT = ""; render();
+    }
+
+    function confirmDay() { 
+        racha++; 
+        localStorage.setItem('rosa_racha', racha); 
+        alert("¡Éxito Rosa registrado!");
+        location.reload(); 
+    }
+
     window.onload = render;
 </script>
 </body>
